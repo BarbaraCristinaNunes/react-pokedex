@@ -4,7 +4,8 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import PokemonCard from './PokemonCard'
+import PokemonCard from './PokemonCard';
+import Pokemon from './Pokemon';
 export default function PokemonBox() {
     return (
         <ThemeProvider theme={myTheme}>
@@ -57,6 +58,7 @@ export default function PokemonBox() {
                             </FormControl>
                         </Grid>
                         <Grid item lg={3} md={6} xs={12} style={{marginBottom: 50}}>
+                            {/* <Pokemon/> */}
                             <PokemonCard/>
                         </Grid>
                     </Grid>
