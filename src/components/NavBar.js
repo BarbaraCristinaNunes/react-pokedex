@@ -58,4 +58,4 @@ const myTheme = createTheme({
         main: "#ffffff",
       },
     },
-  });
+});
