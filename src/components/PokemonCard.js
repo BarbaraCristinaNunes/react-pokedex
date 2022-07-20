@@ -10,6 +10,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export default function PokemonCard(props) {
   // console.log("card ", props.pokemon)
+
   let name = props.pokemon.name !== undefined ? props.pokemon.name.charAt(0).toUpperCase() +  props.pokemon.name.slice(1)
   : "";
   let image = props.pokemon.sprites !== undefined ? props.pokemon.sprites['front_default'] : "";
@@ -136,7 +137,7 @@ const Types = {
       image: "types/bug.png",
   },
   dark: {
-      color: "#bab9dd",
+      color: "#b4b6b6",
       image: "types/dark.png",
   },
   dragon: {
