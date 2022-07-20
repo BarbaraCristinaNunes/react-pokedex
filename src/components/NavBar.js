@@ -7,6 +7,9 @@ import {
     Grid,
     TextField
 } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 export default function NavBar(props) {
@@ -26,7 +29,7 @@ export default function NavBar(props) {
                         <Grid item lg={2} xs={6}>
                             <Typography variant="h4">Pokedex</Typography>
                         </Grid>
-                        <Grid item lg={9} xs={12}>
+                        <Grid item lg={7} xs={6}>
                             <TextField 
                                 fullWidth 
                                 id="outlined-basic"
@@ -36,21 +39,83 @@ export default function NavBar(props) {
                                 color="color"
                                 value={props.pokemonInput !== undefined ? props.pokemonInput : ""} 
                                 focused
-                                onChange={(v) => {
-                                    props.setPokemonInput(v.target.value);
-                                    if(Names.includes(v.target.value) || v.target.value < 810 && v.target.value >= 1){
-                                        getPokemonByInput(v.target.value)
-                                        .then((data) => {
-                                            let pokemon = [data];
-                                            props.setPokemon(pokemon);
-                                        })
-                                    }else if(!v.target.value){
-                                        props.setPokemonInput(undefined);
-                                        props.setPokemon(undefined);
-                                    }                                 
-                                }}
+                                onChange={(v) => 
+                                    {
+                                        props.setPokemonInput(v.target.value);
+
+                                        if(Number.isInteger(parseInt(v.target.value)) && 
+                                        v.target.value < 810 && v.target.value >= 1){
+                                            getPokemonByInput(v.target.value)
+                                                .then((data) => {
+                                                    let pokemon = [data];
+                                                    props.setPokemon(pokemon);
+                                            })
+                                        }else if(!v.target.value){
+                                            props.setPokemonInput(undefined);
+                                            props.setPokemon(undefined);
+                                        }else{
+                                            props.names.filter((pokemon) => {
+                                                let value = v.target.value.toLowerCase();
+                                                console.log("value ", value)
+                                                if(value === pokemon.name){
+                                                    getPokemonByInput(value)
+                                                        .then((data) => {
+                                                            let pokemon = [data];
+                                                            props.setPokemon(pokemon);
+                                                    })
+                                                }
+                                            })
+                                        }                            
+                                    }
+                                }
                             />
                         </Grid>
+                        <Grid 
+                                item 
+                                lg={2} 
+                                xs={6} 
+                                style={{ textAlign: "center", marginTop: 7}}
+                            >
+                                <FormControl 
+                                    fullWidth
+                                    color="color"
+                                    focused
+                                >
+                                    <InputLabel 
+                                        htmlFor="grouped-native-select"
+                                    >
+                                        Select by
+                                    </InputLabel>
+                                    <Select 
+                                        native defaultValue="" 
+                                        id="grouped-native-select" 
+                                        label="Select by"
+                                    >
+                                        <option aria-label="None" value="" />
+                                        <option value={"favorite"}>
+                                            Favorite
+                                        </option>
+                                        <optgroup label="Type">
+                                            <option value={"bug"}>Bug</option>
+                                            <option value={"dark"}>Dark</option>
+                                            <option value={"dragon"}>Dragon</option>
+                                            <option value={"electric"}>Electric</option>
+                                            <option value={"fairy"}>Fairy</option>
+                                            <option value={"fighting"}>Fighting</option>
+                                            <option value={"fire"}>fire</option>
+                                            <option value={"flying"}>Flying</option>
+                                            <option value={"ghost"}>Ghost</option>
+                                            <option value={"grass"}>Grass</option>
+                                            <option value={"ground"}>Ground</option>
+                                            <option value={"ice"}>Ice</option>
+                                            <option value={"normal"}>Normal</option>
+                                            <option value={"poison"}>Poison</option>
+                                            <option value={"psychic"}>Psychic</option>
+                                            <option value={"rock"}>Rock</option>
+                                        </optgroup>                        
+                                    </Select>
+                                </FormControl>
+                            </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>
