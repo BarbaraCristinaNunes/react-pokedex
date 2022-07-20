@@ -1,12 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import NavBar from './components/NavBar'
-import PokemonBox from './components/PokemonBox'
+
+import Pokemon from './components/Pokemon';
 function App() {
   return (
     <>
-    <NavBar/>
-      <PokemonBox/>
+      <Pokemon/>
     </>
   );
 }
