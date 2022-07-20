@@ -1,13 +1,28 @@
 import * as React from 'react';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PokemonCard from './PokemonCard';
 import {getPokemonByInput} from '../crud/crud';
 export default function PokemonBox(props) {
     // console.log("from box ", props.pokemon)
+
+    let fullArr = [];
+    
+    if(props.pokemon !== undefined && props.pokemon.length > 1){
+        
+        console.log(props.pokemon.length)
+        props.pokemon.forEach((pokemon) => {
+            let object = {name: pokemon.name, types: [], favorit: false};
+            // console.log(pokemon.name, pokemon.types)
+            pokemon.types.forEach((element) => {
+                // console.log(element.type.name)
+                object.types.push(element.type.name)
+            })
+            fullArr.push(object)
+        })
+
+      console.log("full ",fullArr)
+    }
     return (
         <>
             <ThemeProvider theme={myTheme}>
@@ -39,26 +54,6 @@ export default function PokemonBox(props) {
                             justifyContent="center"
                             style={{margin: 40}}
                         >
-                            <Grid 
-                                item 
-                                lg={12} 
-                                xs={12} 
-                                style={{ textAlign: "center", marginBottom: 50}}
-                            >
-                                <FormControl sx={{ m: 1, minWidth: 120 }} color="third" focused>
-                                    <InputLabel htmlFor="grouped-native-select">Select by</InputLabel>
-                                    <Select native defaultValue="" id="grouped-native-select" label="Select by">
-                                        <option aria-label="None" value="" />
-                                        <option value={3}>
-                                            Favorite
-                                        </option>
-                                        <optgroup label="Type">
-                                            <option value={1}>Option 1</option>
-                                            <option value={2}>Option 2</option>
-                                        </optgroup>                        
-                                    </Select>
-                                </FormControl>
-                            </Grid>
                             {props.pokemon !== undefined ?
                                 <>
                                     {
