@@ -7,47 +7,20 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid, IconButton } from '@mui/material';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import pokemons from '../assets/pokemons.json';
+import {getPokemonByInput} from '../crud/crud';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
 export default function PokemonCard(props) {
-  // console.log("card ", props.pokemon)
-
-  let name = props.pokemon.name !== undefined ? props.pokemon.name.charAt(0).toUpperCase() +  props.pokemon.name.slice(1)
-  : "";
-  let image = props.pokemon.sprites !== undefined ? props.pokemon.sprites['front_default'] : "";
-  let abilities = (pokemon) => {
-    let ability = [];
-    if(pokemon.abilities){
-      pokemon.abilities.forEach((element) => 
-        
-        ability.push(element.ability.name.charAt(0).toUpperCase() + element.ability.name.slice(1))
-      )
-    }
-    return ability;
-  }
-  let types = (pokemon) => {
-    let type = [];
-    if(pokemon.types){
-      if(pokemon.types.length > 1){
-        pokemon.types.forEach((element) => 
-        
-        type.push(element.type.name)
-        )
-        return type;
-      }else{
-        type.push(pokemon.types[0].type.name);
-        return type
-      }
-    }
-    
-  }
-  let mainType = types(props.pokemon)[0];
-
+  // console.log("card ", props.pokemon.name)
   let colors = () => {
     let color = "";
-    types(props.pokemon).forEach((element) => {
+    props.pokemon.types.forEach((element) => {
+      // console.log("element", element)
       color += `, ${Types[element].color}`;
 
-      if(types(props.pokemon).length < 2){
+      if(props.pokemon.types.length < 2){
         color += ", #ffffff";
       }
 
@@ -55,8 +28,6 @@ export default function PokemonCard(props) {
     return color;
   };
 
-  
-    // console.log(Types.fighting.color, mainType)
   return (
     <Card 
       sx={{ maxWidth: 200}} 
@@ -68,40 +39,91 @@ export default function PokemonCard(props) {
       >
       <CardMedia
         component="img"
-        alt={name}
+        alt={props.pokemon.name.charAt(0).toUpperCase() + props.pokemon.name.slice(1)}
         height="auto"
-        image={image}
+        image={props.pokemon.image}
         style={{backgroundColor: "#ffffff"}}
       >
       </CardMedia>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" style={{textAlign: "center"}}>
-          {name}
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          Power
-        </Typography>
-        {
-          abilities(props.pokemon) !== undefined? 
-            abilities(props.pokemon).map((ability, index) => 
-              <Grid
-                container 
-                key={`${index}Ability`}
-                spacing={1}
-                direction="row"
-                alignItems="baseline" 
-              >
-                <Grid item lg={"auto"} xs={"auto"} style={{textAlign: "left", color: "#ffffff"}}>
+        <Grid
+          container 
+          spacing={1}
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center" 
+        >
+          <Grid
+            item
+            lg={1}
+            xs={1}
+          > 
+            {
+              props.pokemon.favorit === false ?
+                <FavoriteIcon 
+                  style={{fontSize: 20}} 
+                  onClick={(v) => {
+                    props.allPokemons.filter((element) => {
+                      if(element.name === props.pokemon.name){
+                        props.pokemon.favorit = true;
+                      }
+                    })
+                    props.setAllPokemons(props.allPokemons);
+                  }}
+                />
+              : 
+                <FavoriteIcon 
+                  style={{fontSize: 30, color: "gold"}} 
+                  onClick={(v) => {
+                    props.allPokemons.filter((element) => {
+                      if(element.name === props.pokemon.name){
+                        props.pokemon.favorit = false;
+                      }
+                    })
+                    props.setAllPokemons(props.allPokemons);
+                  }}
+                />
+            }
+            
+          </Grid>
+          <Grid
+            item
+            lg={11}
+            xs={11}
+          >
+            <Typography gutterBottom variant="h5" component="div" style={{textAlign: "center"}}>
+              {props.pokemon.name.charAt(0).toUpperCase() + props.pokemon.name.slice(1)}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            lg={12}
+            xs={12}
+          >
+            <Typography variant="h6" color="text.secondary">
+              Abilities
+            </Typography>
+          </Grid>
+          {
+          props.pokemon.powers !== undefined? 
+            props.pokemon.powers.map((ability, index) => 
+              <>
+                <Grid item key={`${index}${props.pokemon.name}Icon`} lg={2} xs={2} style={{textAlign: "left", color: "#ffffff"}}>
                   <Brightness7Icon style={{fontSize: "small"}}/>
                 </Grid>
-                <Grid item lg={"auto"} xs={"auto"} style={{textAlign: "left"}}>
+                <Grid item key={`${index}${props.pokemon.name}Ability`} lg={10} xs={10} style={{textAlign: "left"}}>
                   {ability}
                 </Grid>
-              </Grid>
-
+              </>
             )
           : ""
         }
+
+        </Grid>
+        
+        
+        
+        
       </CardContent>
       <CardActions>
           <Grid 
@@ -116,9 +138,23 @@ export default function PokemonCard(props) {
               </Grid>
               <Grid item lg={6} xs={6} style={{textAlign: "right"}}>
                   {/* <Button size="small">Type</Button> */}
-                  {types(props.pokemon) !== undefined ? 
-                    types(props.pokemon).map((type, index) => 
-                      <IconButton key={`${index}Type`}>
+                  {props.pokemon.types !== undefined ? 
+                    props.pokemon.types.map((type, index) => 
+                      <IconButton 
+                        key={`${index}${props.pokemon.name}Type`}
+                        onClick={(v) => {
+                          let pokemonsByType = [];
+
+                          pokemons.data.filter((pokemon) => {
+                            if(pokemon.types.includes(type)){
+                              pokemonsByType.push(pokemon)
+                            }
+                          })
+                          props.setPokemonByType(pokemonsByType);
+                          props.setPokeLength(pokemonsByType.length);
+                          props.setType(type);
+                        }}
+                      >
                         <img alt={type} src={Types[type].image} width="25"/>
                       </IconButton>
                     )
