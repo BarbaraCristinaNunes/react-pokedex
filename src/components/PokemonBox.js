@@ -2,27 +2,10 @@ import * as React from 'react';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import PokemonCard from './PokemonCard';
-import {getPokemonByInput} from '../crud/crud';
+import pokemons from '../assets/pokemons.json';
+
 export default function PokemonBox(props) {
-    // console.log("from box ", props.pokemon)
 
-    let fullArr = [];
-    
-    if(props.pokemon !== undefined && props.pokemon.length > 1){
-        
-        console.log(props.pokemon.length)
-        props.pokemon.forEach((pokemon) => {
-            let object = {name: pokemon.name, types: [], favorit: false};
-            // console.log(pokemon.name, pokemon.types)
-            pokemon.types.forEach((element) => {
-                // console.log(element.type.name)
-                object.types.push(element.type.name)
-            })
-            fullArr.push(object)
-        })
-
-      console.log("full ",fullArr)
-    }
     return (
         <>
             <ThemeProvider theme={myTheme}>
@@ -54,6 +37,20 @@ export default function PokemonBox(props) {
                             justifyContent="center"
                             style={{margin: 40}}
                         >
+                            {
+                                props.type ?
+                                <Grid
+                                    item
+                                    lg={12}
+                                    xs={12}
+                                    style={{textAlign: "center"}}
+                                >
+                                    <Typography variant='h3' style={{marginBottom: 30}}>
+                                        {`${props.type.charAt(0).toUpperCase() +  props.type.slice(1)} type pokemon`}
+                                        </Typography>
+                                </Grid>
+                                : ""
+                            }
                             {props.pokemon !== undefined ?
                                 <>
                                     {
@@ -61,37 +58,42 @@ export default function PokemonBox(props) {
                                             return (
                                                 <Grid 
                                                     item 
-                                                    key={`${index}Card`} 
+                                                    key={`${index}${pokemon.name}Card`} 
                                                     lg={3} 
                                                     md={6} 
                                                     xs={12} 
                                                     style={{marginBottom: 50}}
                                                 >
-                                                    <PokemonCard pokemon={pokemon}/>
+                                                    <PokemonCard 
+                                                        pokemon={pokemon}
+                                                        setAllPokemons={props.setAllPokemons}
+                                                        setPokeLength={props.setPokeLength}
+                                                        setType={props.setType}
+                                                        setPokemonByType={props.setPokemonByType}
+                                                        allPokemons={props.pokemon}
+
+                                                    />
                                                 </Grid>
                                             )
                                         })
                                     }
                                     {
-                                        props.pokemon.length > 1 ?
+                                        props.pokemon.length > 1 && props.type === undefined?
                                             <Grid item lg={12} xs={12} style={{textAlign: "center"}}> 
                                                 <Button 
                                                     variant="contained" 
                                                     color="primary"
                                                     onClick={(v) => {
-                                                        console.log("pokeLength1 ", props.pokeLength);
+                                                        // console.log("pokeLength1 ", props.pokeLength);
                                                         let sum = props.pokeLength + 8;
                                                         let arr = props.pokemon;
-                                                        console.log("sum ", sum, "arr ", arr)
+                                                        // console.log("sum ", sum, "arr ", arr)
                                                         for(let i = props.pokeLength; i < sum; i++){
-                                                            getPokemonByInput(i)
-                                                                .then((data) => {
-                                                                    arr.push(data);
-                                                                })
+                                                            arr.push(pokemons.data[i]);
                                                         }
                                                         props.setAllPokemons(arr);
                                                         props.setPokeLength(sum);
-                                                        console.log("props.pokeLength ", props.pokeLength, "props.pokemon ", props.pokemon)
+                                                        // console.log("props.pokeLength ", props.pokeLength, "props.pokemon ", props.pokemon)
                                                     }}
                                                 >
                                                     Show more
