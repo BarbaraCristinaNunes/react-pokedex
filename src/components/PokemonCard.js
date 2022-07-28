@@ -95,8 +95,8 @@ export default function PokemonCard(props) {
         border: "solid 2px",
         borderImageSource: `linear-gradient(to bottom right${colors(props.pokemon.types)})`,
         marginLeft: 8,
-        transitionDuration: "1s",
         "&:hover": {
+          maxWidth: "58%",
           background: `radial-gradient(circle${colors(props.pokemon.types)})`,
           border: "solid 5px",
           borderImageSource: `linear-gradient(to bottom right${colors(props.pokemon.types)})`,
