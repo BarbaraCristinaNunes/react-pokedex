@@ -24,7 +24,6 @@ export default function NavBar(props) {
             props.setType(undefined);
             props.setPokemonByType(undefined);
             props.setPokeLength(8);
-            props.setAllPokemons(props.showAllPokemons());
         }
     }
     return (
@@ -46,6 +45,20 @@ export default function NavBar(props) {
                             <IconButton 
                                 onClick={(v) => {
                                     resetPokemons();
+                                    window.location.reload(false);
+                                }}
+                                sx={{
+                                    "&:focus": {
+                                        animation: "btn 0.5s linear",
+                                        "@keyframes btn": {
+                                            "0%": {
+                                                transform: "rotateZ(0)",
+                                            },
+                                            "100%": {
+                                                transform: "rotateZ(360deg)",
+                                            }
+                                        }
+                                    },
                                 }}
                             >
                                 <img alt="logo" src="/pokeball.png" width="55"/>
@@ -61,6 +74,7 @@ export default function NavBar(props) {
                                 color="color"
                                 onClick={(v) => {
                                     resetPokemons();
+                                    window.location.reload(false);
                                 }}
                             >
                                 <Typography variant="h4">Pokedex</Typography>
@@ -132,7 +146,7 @@ export default function NavBar(props) {
                                             if(v.target.value === "All"){
                                                 props.setPokemonByType(undefined);
                                                 props.setType(undefined);
-                                                props.setAllPokemons(props.showAllPokemons());   
+                                                window.location.reload(false);   
                                             }else{
                                                 let pokemonsByType = undefined;
                                                 if(v.target.value === "favorite"){
@@ -151,6 +165,7 @@ export default function NavBar(props) {
                                                 props.setPokemonByType(pokemonsByType);
                                                 props.setPokeLength(pokemonsByType.length);
                                                 props.setType(v.target.value);
+                                                props.setPokemon(undefined);
                                             }                                            
                                         }}
                                     >
@@ -176,6 +191,7 @@ export default function NavBar(props) {
                                         <MenuItem value={"poison"}>Poison</MenuItem>
                                         <MenuItem value={"psychic"}>Psychic</MenuItem>
                                         <MenuItem value={"rock"}>Rock</MenuItem>
+                                        <MenuItem value={"steel"}>Steel</MenuItem>
                                         <MenuItem value={"water"}>Water</MenuItem>
                                     </Select>
                                 </FormControl>
