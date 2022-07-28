@@ -11,31 +11,30 @@ export default function PokemonBox(props) {
             <ThemeProvider theme={myTheme}>
                 <Box
                     sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                        m: 1,
-                        width: "90%",
-                        height: 128,
-                    },
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: "center",
+                        '& > :not(style)': {
+                            width: "90%",
+                            height: "auto",
+                        },
                     }}
-                    style={{justifyContent: "center"}}
                 >
-                    <Paper 
+                    <Paper
                         elevation={24} 
-                        style={{
-                            maxWidth: "90%",
-                            marginTop: 50,
-                            height: "auto"
+                        sx={{
+                            marginTop: 5,
+                            marginBottom: 5,
+                            height: "auto",
                         }}
                     >
                         <Grid
                             container 
-                            spacing={1}
                             direction="row"
+                            spacing={1}
                             alignItems="center"
                             justifyContent="center"
-                            style={{margin: 40}}
+                            sx={{marginTop: 5}}
                         >
                             {
                                 props.type ?
@@ -43,10 +42,14 @@ export default function PokemonBox(props) {
                                     item
                                     lg={12}
                                     xs={12}
-                                    style={{textAlign: "center"}}
+                                    sx={{textAlign: "center"}}
                                 >
-                                    <Typography variant='h3' style={{marginBottom: 30}}>
-                                        {`${props.type.charAt(0).toUpperCase() +  props.type.slice(1)} type pokemon`}
+                                    <Typography variant='h3' sx={{marginBottom: 5, color: "#c50e29"}}>
+                                        {
+                                            props.type === "favorite" ?
+                                                `${props.type.charAt(0).toUpperCase() +  props.type.slice(1)}s pokemons`
+                                            : `${props.type.charAt(0).toUpperCase() +  props.type.slice(1)} types pokemons`
+                                        }
                                         </Typography>
                                 </Grid>
                                 : ""
@@ -62,7 +65,7 @@ export default function PokemonBox(props) {
                                                     lg={3} 
                                                     md={6} 
                                                     xs={12} 
-                                                    style={{marginBottom: 50}}
+                                                    sx={{marginBottom: 5}}
                                                 >
                                                     <PokemonCard 
                                                         pokemon={pokemon}
@@ -71,7 +74,8 @@ export default function PokemonBox(props) {
                                                         setType={props.setType}
                                                         setPokemonByType={props.setPokemonByType}
                                                         allPokemons={props.pokemon}
-
+                                                        setPokemon={props.setPokemon}
+                                                        setPokemonInput={props.setPokemonInput}
                                                     />
                                                 </Grid>
                                             )
@@ -79,21 +83,23 @@ export default function PokemonBox(props) {
                                     }
                                     {
                                         props.pokemon.length > 1 && props.type === undefined?
-                                            <Grid item lg={12} xs={12} style={{textAlign: "center"}}> 
+                                            <Grid 
+                                                item 
+                                                lg={12} 
+                                                xs={12} 
+                                                sx={{textAlign: "center", marginTop: 2, marginBottom: 7}}
+                                            > 
                                                 <Button 
                                                     variant="contained" 
                                                     color="primary"
                                                     onClick={(v) => {
-                                                        // console.log("pokeLength1 ", props.pokeLength);
                                                         let sum = props.pokeLength + 8;
                                                         let arr = props.pokemon;
-                                                        // console.log("sum ", sum, "arr ", arr)
                                                         for(let i = props.pokeLength; i < sum; i++){
                                                             arr.push(pokemons.data[i]);
                                                         }
                                                         props.setAllPokemons(arr);
                                                         props.setPokeLength(sum);
-                                                        // console.log("props.pokeLength ", props.pokeLength, "props.pokemon ", props.pokemon)
                                                     }}
                                                 >
                                                     Show more
