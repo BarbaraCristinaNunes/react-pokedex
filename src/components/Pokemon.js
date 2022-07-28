@@ -97,7 +97,6 @@ export default class Pokemon extends Component {
                     setPokemonByType={(v) => {this.setState({pokemonByType: v})}}
                     allPokemons={this.state.allPokemons}
                     setAllPokemons={(v) => {this.setState({allPokemons: v})}}
-                    showAllPokemons={showAllPokemons()}
                 />
                 <PokemonBox 
                     pokemon={
