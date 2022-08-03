@@ -1,6 +1,8 @@
 # React-pokedex
 
 ![](https://github.com/BarbaraCristinaNunes/react-pokedex/blob/master/public/pokedex.gif)
+
+Data used in this project is from [PokéApi](README.md).
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
