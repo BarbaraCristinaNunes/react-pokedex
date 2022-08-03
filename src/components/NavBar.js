@@ -35,6 +35,7 @@ export default function NavBar(props) {
                         spacing={1}
                         direction="row"
                         alignItems="center"
+                        sx={{marginTop: 0.5, marginBottom: 0.5}}
                     >
                         <Grid 
                             item 
