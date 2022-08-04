@@ -62,7 +62,7 @@ export default function NavBar(props) {
                                     },
                                 }}
                             >
-                                <img alt="logo" src="pokeball.png" width="55"/>
+                                <img alt="logo" src="pokebal.png" width="55"/>
                             </IconButton>                            
                         </Grid>
                         <Grid 
