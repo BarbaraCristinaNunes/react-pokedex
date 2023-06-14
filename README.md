@@ -2,7 +2,7 @@
 
 ![](https://github.com/BarbaraCristinaNunes/react-pokedex/blob/master/public/pokedex.gif)
 
-Data used in this project is from [PokéApi](README.md).
+Data used in this project is from [PokéApi](https://pokeapi.co/).
 
 See the page [here](https://barbaracristinanunes.github.io/react-pokedex/)
 ## Getting Started with Create React App
