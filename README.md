@@ -1,10 +1,21 @@
 # React-pokedex
+This project is a pokedex in which user can find all pokemons from the franchise called [Pokemon](https://en.wikipedia.org/wiki/Pok%C3%A9mon) their evolutions and the type.
 
-![](https://github.com/BarbaraCristinaNunes/react-pokedex/blob/master/public/pokedex.gif)
+The main functionalities of this application are:
+
+1- Search bar: The user can search a pokemon by id or name.
+2- Select favorites pokemons: The favorite pokemon is saved in the local storage.
+3- Type dropdown: Allows the user to select a group of pokemon according to type (grass, poison, dark, etc ...), or the favorite pokemons.
+4- Type button at pokemon card: Each pokemon card has pokemon's type which is a button that allows the user see all pokemon of a specific type when this button is clicked.
+5- Evolution button: Open a dialog with all evolutions of the pokemon.
 
 Data used in this project is from [PokéApi](https://pokeapi.co/).
 
 See the page [here](https://barbaracristinanunes.github.io/react-pokedex/)
+
+![](https://github.com/BarbaraCristinaNunes/react-pokedex/blob/master/public/pokedex.gif)
+
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
